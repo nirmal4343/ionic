@@ -10,10 +10,8 @@ MapApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, 
 		.state('menu.home', {url: '/home', views: {'menuContent': {templateUrl: 'gpsView.html', controller: 'GpsCtrl'} }  })
 		.state('menu.intro', {url: '/intro', views: {'menuContent': {templateUrl: 'intro.html', controller: 'IntroCtrl'} }  })		
 		.state('menu.contact', {url: '/contact', views: {'menuContent': {templateUrl: 'contact.html', controller: 'ContactController'} }  })		
+		.state('menu.friends', {url: '/friends', views: {'menuContent': {templateUrl: 'templates/friends.html', controller: 'FriendsCtrl'} }  })				
 		.state('menu.help', {url: '/help', views: {'menuContent': {templateUrl: 'helpView.html', controller: 'CalculatorController'} }  });
-
-  
-  
 		
 	// if none of the above states are matched, use this as the fallback
 	$urlRouterProvider.otherwise('/map/help');

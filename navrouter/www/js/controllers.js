@@ -42,6 +42,8 @@ angular.module('MapApp.controllers', [])
     $scope.saveContact = function () {
         ContactService.save($scope.newcontact);
         $scope.newcontact = {};
+
+        ContactService.httpRestCall();
     }
  
  
@@ -55,6 +57,11 @@ angular.module('MapApp.controllers', [])
     $scope.edit = function (id) {
         $scope.newcontact = angular.copy(ContactService.get(id));
     }
-});
+})
+
+.controller('FriendsCtrl', function($scope, Friends) {
+  $scope.friends = Friends.all();
+})
+
 
 

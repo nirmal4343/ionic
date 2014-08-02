@@ -1,5 +1,28 @@
 angular.module('MapApp.services', [])
 //http://viralpatel.net/blogs/angularjs-service-factory-tutorial/
+
+.factory('Friends', function() {
+  // Might use a resource here that returns a JSON array
+
+  // Some fake testing data
+  var friends = [
+    { id: 0, name: 'Scruff McGruff' },
+    { id: 1, name: 'G.I. Joe' },
+    { id: 2, name: 'Miss Frizzle' },
+    { id: 3, name: 'Ash Ketchum' }
+  ];
+
+  return {
+    all: function() {
+      return friends;
+    },
+    get: function(friendId) {
+      // Simple index lookup
+      return friends[friendId];
+    }
+  }
+})
+
 .service('MathService', function() {
     this.add = function(a, b) { return a + b };
      
@@ -18,7 +41,11 @@ angular.module('MapApp.services', [])
 })
 
 
-.service('ContactService', function () {
+.service('ContactService', function( $http, $q ) {
+
+
+
+
     //to create unique contact id
     var uid = 1;
      
@@ -72,7 +99,123 @@ angular.module('MapApp.services', [])
  
     //simply returns the contacts list
     this.list = function () {
+        /*
+            var request = $http({
+                method: "get",
+                url: "http://learnresfull-restcall.rhcloud.com/restaurent/",
+                params: {
+                    action: "get"
+                }
+            });
+
+            return( request.then( handleSuccess, handleError ) );
+        */
         return contacts;
     }
+
+
+
+    // I transform the error response, unwrapping the application dta from
+    // the API response payload.
+    function handleError( response ) {
+
+        // The API response from the server should be returned in a
+        // nomralized format. However, if the request was not handled by the
+        // server (or what not handles properly - ex. server error), then we
+        // may have to normalize it on our end, as best we can.
+        if (
+            ! angular.isObject( response.data ) ||
+            ! response.data.message
+            ) {
+
+            return( $q.reject( "An unknown error occurred." ) );
+
+        }
+
+        // Otherwise, use expected error message.
+        return( $q.reject( response.data.message ) );
+
+    }
+
+
+    // I transform the successful response, unwrapping the application data
+    // from the API response payload.
+    function handleSuccess( response ) {
+        Console.log(response.data);
+        return( response.data );
+
+    }
+
+
+})
+
+.service("friendService",function( $http, $q ) {
+        // Return public API.
+        return({
+            //addFriend: addFriend,
+            getFriends: getFriends
+            //removeFriend: removeFriend
+        });
+
+
+        // ---
+        // PUBLIC METHODS.
+        // ---
+
+
+
+
+        // I get all of the friends in the remote collection.
+        function getFriends() {
+
+            var request = $http({
+                method: "get",
+                url: "api/index.cfm",
+                params: {
+                    action: "get"
+                }
+            });
+
+            return( request.then( handleSuccess, handleError ) );
+
+        }
+
+        // ---
+        // PRIVATE METHODS.
+        // ---
+
+
+        // I transform the error response, unwrapping the application dta from
+        // the API response payload.
+        function handleError( response ) {
+
+            // The API response from the server should be returned in a
+            // nomralized format. However, if the request was not handled by the
+            // server (or what not handles properly - ex. server error), then we
+            // may have to normalize it on our end, as best we can.
+            if (
+                ! angular.isObject( response.data ) ||
+                ! response.data.message
+                ) {
+
+                return( $q.reject( "An unknown error occurred." ) );
+
+            }
+
+            // Otherwise, use expected error message.
+            return( $q.reject( response.data.message ) );
+
+        }
+
+
+        // I transform the successful response, unwrapping the application data
+        // from the API response payload.
+        function handleSuccess( response ) {
+
+            return( response.data );
+
+        }
+ 
 });
+
  

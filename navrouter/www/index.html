@@ -46,7 +46,9 @@
 							<a href="#/map/help" data-click-menulink class="item item-icon-left"><i class="icon ion-ios7-help"></i>Dummy Page</a>
 							<!--a href="#/map/home" data-click-menulink class="item item-icon-left"><i class="icon ion-ios7-ionic-outline"></i>Map</a-->							
 							<a href="#/map/intro" data-click-menulink class="item item-icon-left"><i class="icon ion-ios7-help"></i>Intro</a>														
-							<a href="#/map/contact" data-click-menulink class="item item-icon-left"><i class="icon ion-ios7-help"></i>Contact</a>																					
+							<a href="#/map/contact" data-click-menulink class="item item-icon-left"><i class="icon ion-ios7-help"></i>Contact</a>		
+							<a href="#/map/friends" data-click-menulink class="item item-icon-left"><i class="icon ion-ios7-help"></i>Friends</a>		
+
 						</ul>
 					</ion-content>
 				</ion-side-menu>
@@ -74,13 +76,14 @@
 				<ion-content has-header="true">
 				<div class="card" id="topofpage">
 				<div class="item item-divider">
-				 <div ng-controller="CalculatorController">
+				<div ng-controller="CalculatorController">
 					Enter a number:
 					<input type="number" ng-model="number1" />
 					<button ng-click="doSquare()">X<sup>2</sup></button>
 					<button ng-click="doCube(number1)">X<sup>3</sup></button>
 					 
 					<div>Answer: {{answer}}</div>
+				</div>
 				</div>
 				</div>
 				</ion-content>
