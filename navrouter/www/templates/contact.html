@@ -1,0 +1,46 @@
+<!-- Contact Management -->
+
+<ion-view title="'Contact Info'" left-buttons="leftButtons">
+	<ion-content has-header="true">
+	<div class="list list-inset" ng-controller="ContactController">
+	  <label class="item item-input">
+	    <input type="text" placeholder="First Name" name="name" ng-model="newcontact.name">
+	  </label>
+	  <label class="item item-input">
+	    <input type="text" placeholder="Last Name" name="email" ng-model="newcontact.email">
+	  </label>
+
+	  <label class="item item-input">
+	    <input type="text" placeholder="Phone" name="phone" ng-model="newcontact.phone"/>
+	  </label>
+
+		<br/>
+	  <input type="hidden" ng-model="newcontact.id" />
+
+	 <button ng-click="saveContact()" class="button button-block button-positive">
+		  Save
+	</button>	
+
+
+	<div class="item item-text-wrap" ng-repeat="contact in contacts">
+		<div class="row row-top">
+		  <div class="col">{{ contact.name }}</br>
+		  		{{ contact.email }}</br>
+		  		{{ contact.phone }}
+		  </div>
+	 	<span class="item-note">
+      		<button class="button button-small button-positive" ng-click="edit(contact.id)">
+ 				 Edit
+			</button> <br> </br>
+			<button class="button button-small button-positive" ng-click="delete(contact.id)">
+ 				 Delete
+			</button>
+   		 </span>
+		</div>
+	</div>
+
+</div>
+	 
+	</div>
+	</ion-content>
+</ion-view>

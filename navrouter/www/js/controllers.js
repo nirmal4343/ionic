@@ -42,8 +42,6 @@ angular.module('MapApp.controllers', [])
     $scope.saveContact = function () {
         ContactService.save($scope.newcontact);
         $scope.newcontact = {};
-
-        ContactService.httpRestCall();
     }
  
  
@@ -59,9 +57,38 @@ angular.module('MapApp.controllers', [])
     }
 })
 
-.controller('FriendsCtrl', function($scope, Friends) {
-  $scope.friends = Friends.all();
+.controller('FriendsCtrl', function($scope, FriendService) {
+
+    // Dependency Injection, this portion of code will get execute one the menu item got clicked from side menu. NOT on PAGE LOAD
+    var promise = FriendService.getEmp();
+        promise.then(
+        function(payload) { 
+                  $scope.friends = payload
+        },
+        function(errorPayload) {
+                  $log.error('failure loading Employee', errorPayload);
+        });
+
 })
+
+.controller('FriendDetailCtrl', function($scope, $stateParams, FriendService) {
+
+    // alert($stateParams.friendId);
+    // Dependency Injection, this portion of code will get execute one the menu item got clicked from side menu. NOT on PAGE LOAD
+    // $scope.friend =  FriendService.getTempEmp(2);
+    
+    var promise = FriendService.getEmpDetails($stateParams.friendId);
+        promise.then(
+        function(payload) { 
+                  $scope.friend = payload[0]; // Only one object
+
+        },
+        function(errorPayload) {
+                  $log.error('failure loading Employee', errorPayload);
+        });
+
+
+});
 
 
 

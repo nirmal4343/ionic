@@ -41,10 +41,7 @@ angular.module('MapApp.services', [])
 })
 
 
-.service('ContactService', function( $http, $q ) {
-
-
-
+.service('ContactService', function() {
 
     //to create unique contact id
     var uid = 1;
@@ -60,7 +57,7 @@ angular.module('MapApp.services', [])
     //save method create a new contact if not already exists
     //else update the existing object
     this.save = function (contact) {
-        if (contact.id == null) {
+        if (contact.id == null || contact.id == undefined ) {
             //if this is new contact, add it in contacts array
             contact.id = uid++;
             contacts.push(contact);
@@ -99,78 +96,38 @@ angular.module('MapApp.services', [])
  
     //simply returns the contacts list
     this.list = function () {
-        /*
-            var request = $http({
-                method: "get",
-                url: "http://learnresfull-restcall.rhcloud.com/restaurent/",
-                params: {
-                    action: "get"
-                }
-            });
-
-            return( request.then( handleSuccess, handleError ) );
-        */
         return contacts;
     }
 
-
-
-    // I transform the error response, unwrapping the application dta from
-    // the API response payload.
-    function handleError( response ) {
-
-        // The API response from the server should be returned in a
-        // nomralized format. However, if the request was not handled by the
-        // server (or what not handles properly - ex. server error), then we
-        // may have to normalize it on our end, as best we can.
-        if (
-            ! angular.isObject( response.data ) ||
-            ! response.data.message
-            ) {
-
-            return( $q.reject( "An unknown error occurred." ) );
-
-        }
-
-        // Otherwise, use expected error message.
-        return( $q.reject( response.data.message ) );
-
-    }
-
-
-    // I transform the successful response, unwrapping the application data
-    // from the API response payload.
-    function handleSuccess( response ) {
-        Console.log(response.data);
-        return( response.data );
-
-    }
-
-
 })
 
-.service("friendService",function( $http, $q ) {
+.service("FriendService",function( $http, $q ) {
+
+
+
+    // Demo End
         // Return public API.
+        // This is a constructor of Friend Service, we dont want to make REST call on constructor init.
+        /*
         return({
             //addFriend: addFriend,
             getFriends: getFriends
             //removeFriend: removeFriend
         });
-
+        */
 
         // ---
         // PUBLIC METHODS.
         // ---
 
-
-
+        var empInformation = {};
 
         // I get all of the friends in the remote collection.
-        function getFriends() {
-
+        this.getEmp = function getFriends() {
+            //alert('getting emp');
             var request = $http({
                 method: "get",
-                url: "api/index.cfm",
+                url: "http://learnresfull-restcall.rhcloud.com/restaurent/",
                 params: {
                     action: "get"
                 }
@@ -211,9 +168,61 @@ angular.module('MapApp.services', [])
         // I transform the successful response, unwrapping the application data
         // from the API response payload.
         function handleSuccess( response ) {
-
+            //alert('data count ' + response.data[0].firstName);
+            empInformation = response.data;
             return( response.data );
 
+        }
+
+
+
+                // I get all of the friends in the remote collection.
+        this.getEmpDetails = function getEmpDetails(empId) {
+            //alert('getting emp');
+            var request = $http({
+                method: "get",
+                url: "http://learnresfull-restcall.rhcloud.com/restaurent/employee/" + empId,
+                params: {
+                    action: "get"
+                }
+            });
+
+            return( request.then( handleEmpDetailsSuccess, handleDtlError ) );
+
+        }
+
+        // ---
+        // PRIVATE METHODS.
+        // ---
+
+
+        // I transform the error response, unwrapping the application dta from
+        // the API response payload.
+        function handleDtlError( response ) {
+
+            // The API response from the server should be returned in a
+            // nomralized format. However, if the request was not handled by the
+            // server (or what not handles properly - ex. server error), then we
+            // may have to normalize it on our end, as best we can.
+            if (
+                ! angular.isObject( response.data ) ||
+                ! response.data.message
+                ) {
+
+                return( $q.reject( "An unknown error occurred." ) );
+
+            }
+
+            // Otherwise, use expected error message.
+            return( $q.reject( response.data.message ) );
+
+        }
+
+
+        // I transform the successful response, unwrapping the application data
+        // from the API response payload.
+        function handleEmpDetailsSuccess( response ) {
+            return( response.data );
         }
  
 });

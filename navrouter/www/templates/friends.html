@@ -1,12 +1,14 @@
 <ion-view title="Friends" left-buttons="leftButtons">
 
   <ion-content class="has-header">
-  	<div class="card" id="topofpage">
 	    <ion-list>
-	      <ion-item ng-repeat="friend in friends" type="item-text-wrap" href="#/tab/friend/{{friend.id}}">
-	        {{friend.name}}
-	      </ion-item>
-	    </ion-list>
-		</div>
+			<ion-item ng-repeat="friend in friends" class="item item-thumbnail-left" href="#/map/friendDetail/{{friend.id}}">
+
+			    <img src="{{friend.imageDownloadPath}}">
+			    <h2>{{friend.firstName}}</h2>
+			    <p>{{friend.title}}</p>
+
+        	</ion-item>
+		</ion-list>
   </ion-content>
 </ion-view>
